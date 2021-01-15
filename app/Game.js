@@ -1,8 +1,7 @@
-import { Card } from "./Card.js";
+import { Player } from "./Player.js";
 import { Deck } from "./Deck.js";
 
-const card = new Card("A", "hearts");
-document.getElementById("playersCards").appendChild(card.render());
+const player = new Player("Mateusz");
 
 const deck = new Deck();
-console.log(deck.shuffle());
+deck.shuffle();
