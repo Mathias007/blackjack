@@ -1,6 +1,7 @@
 import { Player } from "./Player.js";
 import { Deck } from "./Deck.js";
 import { Table } from "./Table.js";
+import { Message } from "./Message.js";
 
 class Game {
     constructor({
@@ -10,12 +11,15 @@ class Game {
         table,
         hitButton,
         standButton,
+        messageBox,
     }) {
         this.hitButton = hitButton;
         this.standButton = standButton;
 
         this.playerPoints = playerPoints;
         this.dealerPoints = dealerPoints;
+
+        this.messageBox = messageBox;
 
         this.player = player;
         this.dealer = new Player("Krupier");
@@ -69,6 +73,41 @@ class Game {
 
             this.dealerPoints.innerHTML = this.dealer.calculatePoints();
         }
+
+        this.endTheGame();
+    }
+
+    endTheGame() {
+        this.hitButton.removeEventListener("click", (event) => this.hitCard());
+        this.standButton.removeEventListener("click", (event) =>
+            this.dealerPlays()
+        );
+
+        this.hitButton.style.display = "none";
+        this.standButton.style.display = "none";
+
+        if (
+            this.player.points < 21 &&
+            this.player.points == this.dealer.points
+        ) {
+            this.messageBox.setText("remis").show();
+            return;
+        }
+
+        if (this.player.points > 21) {
+            this.messageBox.setText("wygrywa dealer").show();
+            return;
+        }
+
+        if (this.dealer.points > 21) {
+            this.messageBox.setText("wygrywa player").show();
+            return;
+        }
+
+        if (this.player.points < this.dealer.points) {
+            this.messageBox.setText("wygrywa dealer").show();
+            return;
+        }
     }
 }
 
@@ -76,6 +115,8 @@ const table = new Table(
     document.getElementById("dealersCards"),
     document.getElementById("playersCards")
 );
+
+const messageBox = new Message(document.getElementById("message"));
 
 const player = new Player("Mateusz");
 
@@ -86,6 +127,7 @@ const game = new Game({
     playerPoints: document.getElementById("playerPoints"),
     player,
     table,
+    messageBox,
 });
 
 game.run();
