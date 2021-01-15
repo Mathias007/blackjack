@@ -4,11 +4,11 @@ export class Table {
         this.playersCards = playersCards;
     }
 
-    showDealersCard(card) {
-        this.dealersCards.appendChild(card);
+    showPlayersCard(card) {
+        this.playersCards.appendChild(card.render());
     }
 
-    showPlayersCard(card) {
-        this.playersCards.appendChild(card);
+    showDealersCard(card) {
+        this.dealersCards.appendChild(card.render());
     }
 }
