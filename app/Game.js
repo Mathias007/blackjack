@@ -3,9 +3,19 @@ import { Deck } from "./Deck.js";
 import { Table } from "./Table.js";
 
 class Game {
-    constructor({ player, table, hitButton, standButton }) {
+    constructor({
+        player,
+        playerPoints,
+        dealerPoints,
+        table,
+        hitButton,
+        standButton,
+    }) {
         this.hitButton = hitButton;
         this.standButton = standButton;
+
+        this.playerPoints = playerPoints;
+        this.dealerPoints = dealerPoints;
 
         this.player = player;
         this.dealer = new Player("Krupier");
@@ -17,7 +27,7 @@ class Game {
 
     run() {
         this.hitButton.addEventListener("click", (event) => this.hitCard());
-        
+
         this.dealCards();
     }
 
@@ -37,6 +47,9 @@ class Game {
             this.dealer.hand.addCard(card2);
             this.table.showDealersCard(card2);
         }
+
+        this.playerPoints.innerHTML = this.player.calculatePoints();
+        this.dealerPoints.innerHTML = this.dealer.calculatePoints();
     }
 }
 
@@ -50,6 +63,8 @@ const player = new Player("Mateusz");
 const game = new Game({
     hitButton: document.getElementById("hit"),
     standButton: document.getElementById("stand"),
+    dealerPoints: document.getElementById("dealerPoints"),
+    playerPoints: document.getElementById("playerPoints"),
     player,
     table,
 });
