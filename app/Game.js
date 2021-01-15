@@ -17,6 +17,7 @@ class Game {
 
     run() {
         this.hitButton.addEventListener("click", (event) => this.hitCard());
+        
         this.dealCards();
     }
 
